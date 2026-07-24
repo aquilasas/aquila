@@ -149,5 +149,19 @@ bindChips('chipsMoneda', 'moneda');
 bindChips('chipsBien', 'bien');
 updateCta();
 
+/* Nav: resaltar la sección visible */
+const navAnchors = [...nav.querySelectorAll('.nav-links a')];
+const linkFor = (id) => navAnchors.find((a) => a.getAttribute('href') === `#${id}`);
+const spyObserver = new IntersectionObserver((entries) => {
+  for (const entry of entries) {
+    const link = linkFor(entry.target.id);
+    if (link) link.classList.toggle('active', entry.isIntersecting);
+  }
+}, { rootMargin: '-35% 0px -55% 0px' });
+['areas', 'leasing', 'estimador', 'equipo'].forEach((id) => {
+  const el = document.getElementById(id);
+  if (el) spyObserver.observe(el);
+});
+
 /* Año en el footer */
 document.getElementById('year').textContent = new Date().getFullYear();

@@ -43,6 +43,14 @@ body {
 
 ::selection { background: rgba(224, 179, 84, 0.35); }
 
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+section[id] { scroll-margin-top: 6rem; }
+
 /* Textura de ruido sutil sobre todo el sitio */
 .noise {
   position: fixed;
@@ -170,6 +178,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
   --wt-hover: 720;
 }
 .nav-links a:hover { color: var(--text); }
+.nav-links a.active { color: var(--gold-soft); }
 
 .nav-burger {
   display: none;
@@ -204,7 +213,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
   align-items: start;
   gap: 3rem;
   padding-bottom: 3rem;
-  min-height: calc(100svh - 14rem);
+  min-height: clamp(430px, calc(100svh - 14rem), 820px);
 }
 .hero-copy { margin-top: 2.2rem; }
 
@@ -215,6 +224,17 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
   color: var(--gold);
   font-variation-settings: "wght" 560;
   margin-bottom: 1.1rem;
+}
+/* Motivo de marca: las tres plumas del ala del logo */
+.eyebrow::before,
+.footer-triad::before {
+  content: "";
+  display: inline-block;
+  width: 26px;
+  height: 15px;
+  margin-right: 0.65rem;
+  vertical-align: -2px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 18'%3E%3Cg stroke='%23e0b354' stroke-width='2.4' stroke-linecap='round' fill='none'%3E%3Cpath d='M2 4.5 L27 2'/%3E%3Cpath d='M5 9.5 L23 7.8'/%3E%3Cpath d='M8 14.5 L19 13.4'/%3E%3C/g%3E%3C/svg%3E") no-repeat center / contain;
 }
 
 .hero-title {
@@ -403,6 +423,23 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
 .card:hover { border-color: rgba(240, 207, 126, 0.32); }
 .card:hover::after { opacity: 1; }
 
+/* Numeración editorial fantasma (01–05) */
+.card::before {
+  content: attr(data-num);
+  position: absolute;
+  top: 1.05rem;
+  right: 1.25rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 2.5rem;
+  font-variation-settings: "wght" 320;
+  line-height: 1;
+  color: rgba(240, 207, 126, 0.13);
+  pointer-events: none;
+  transition: color 0.3s ease;
+}
+.card:hover::before { color: rgba(240, 207, 126, 0.28); }
+
 .card-tag {
   display: inline-block;
   font-size: 0.72rem;
@@ -453,6 +490,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
 
 /* ── Beneficios leasing ─────────────────────── */
 .benefits {
+  counter-reset: benefit;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1px;
@@ -466,6 +504,17 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
   background: var(--surface);
   padding: 1.5rem 1.4rem;
   transition: background 0.3s ease;
+}
+.benefit::before {
+  counter-increment: benefit;
+  content: "0" counter(benefit);
+  display: block;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
+  color: rgba(224, 179, 84, 0.5);
+  margin-bottom: 0.5rem;
 }
 .benefit:hover { background: var(--surface-2); }
 .benefit h4 {
@@ -677,6 +726,8 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
   width: 88px;
   height: 88px;
   margin: 0 auto 1.1rem;
+  outline: 1px solid rgba(240, 207, 126, 0.14);
+  outline-offset: 5px;
   border-radius: 50%;
   display: grid;
   place-items: center;

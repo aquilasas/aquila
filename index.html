@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AQUILA — Soluciones financieras y estratégicas para empresas</title>
   <meta name="description" content="AQUILA es un broker especialista en empresas: inversión, financiamiento y asesoramiento. Leasing, mercado de capitales, SGR, M&A y consultoría estratégica.">
+  <meta name="theme-color" content="#0d0c09">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="AQUILA — Soluciones financieras y estratégicas para empresas">
+  <meta property="og:description" content="Inversión · Financiamiento · Asesoramiento. Especialistas en empresas.">
+  <meta property="og:image" content="assets/logo-square.png">
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,7 +32,7 @@
       <a class="wt" href="#equipo">Quiénes somos</a>
     </nav>
     <a class="btn btn-gold btn-sm" href="#contacto">Contactanos</a>
-    <button class="nav-burger" id="burger" aria-label="Abrir menú" aria-expanded="false">
+    <button type="button" class="nav-burger" id="burger" aria-label="Abrir menú" aria-expanded="false">
       <span></span><span></span>
     </button>
   </header>
@@ -90,7 +95,7 @@
     </div>
 
     <div class="bento">
-      <article class="card bento-featured reveal" data-tilt>
+      <article class="card bento-featured reveal" data-tilt data-num="01">
         <span class="card-tag">Línea central</span>
         <h3 class="card-title wt">Leasing</h3>
         <p>Financiación de bienes de capital preservando tu flujo de fondos, con estructuras
@@ -103,21 +108,21 @@
         <a class="card-link wt" href="#leasing">Ver en detalle →</a>
       </article>
 
-      <article class="card reveal" data-tilt>
+      <article class="card reveal" data-tilt data-num="02">
         <span class="card-tag">ALyC</span>
         <h3 class="card-title wt">NEIX</h3>
         <p>Mercado de capitales e inversiones: inversiones locales, banca privada y trading,
           a través de un Agente de Liquidación y Compensación.</p>
       </article>
 
-      <article class="card reveal" data-tilt>
+      <article class="card reveal" data-tilt data-num="03">
         <span class="card-tag">Garantías</span>
         <h3 class="card-title wt">SGR</h3>
         <p>Sociedades de Garantía Recíproca para potenciar tus negocios. Trabajamos con
           Móvil, Ciudad, Fidaval y otras.</p>
       </article>
 
-      <article class="card reveal" data-tilt>
+      <article class="card reveal" data-tilt data-num="04">
         <span class="card-tag">Operaciones</span>
         <h3 class="card-title wt">M&amp;A</h3>
         <ul class="card-list">
@@ -129,7 +134,7 @@
         <p class="card-note">Operaciones de M&amp;A concretadas, principalmente del sector vitivinícola.</p>
       </article>
 
-      <article class="card reveal" data-tilt>
+      <article class="card reveal" data-tilt data-num="05">
         <span class="card-tag">Acompañamiento integral</span>
         <h3 class="card-title wt">Consultoría estratégica</h3>
         <p>Diagnóstico, planificación, implementación y seguimiento. Reestructuración de deudas,
@@ -165,7 +170,7 @@
         <p>Ideal para bienes importados o empresas que operan en moneda extranjera.</p>
       </article>
       <article class="coin-card reveal" data-tilt>
-        <div class="coin">⇄</div>
+        <div class="coin"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#2b1f07" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M9.5 14.5 L14.5 9.5"/><path d="M8 12l-2.2 2.2a3.4 3.4 0 0 0 4.8 4.8L12.8 17"/><path d="M16 12l2.2-2.2a3.4 3.4 0 0 0-4.8-4.8L11.2 7"/></svg></div>
         <h3 class="wt">Dólar Link</h3>
         <p>Protege tu inversión frente a la inflación.</p>
       </article>
@@ -205,26 +210,26 @@
         <div class="est-field">
           <span class="est-label">Monto estimado</span>
           <div class="chip-row" id="chipsMonto" role="group" aria-label="Monto estimado">
-            <button class="chip" data-value="USD 30.000">USD 30.000</button>
-            <button class="chip is-active" data-value="USD 50.000">USD 50.000</button>
-            <button class="chip" data-value="USD 100.000">USD 100.000</button>
-            <button class="chip" data-value="Otro monto">Otro</button>
+            <button type="button" class="chip" data-value="USD 30.000">USD 30.000</button>
+            <button type="button" class="chip is-active" data-value="USD 50.000">USD 50.000</button>
+            <button type="button" class="chip" data-value="USD 100.000">USD 100.000</button>
+            <button type="button" class="chip" data-value="Otro monto">Otro</button>
           </div>
         </div>
         <div class="est-field">
           <span class="est-label">Moneda</span>
           <div class="chip-row" id="chipsMoneda" role="group" aria-label="Moneda">
-            <button class="chip is-active" data-value="Dólar Hard">Dólar Hard</button>
-            <button class="chip" data-value="Dólar Link">Dólar Link</button>
-            <button class="chip" data-value="Pesos">Pesos</button>
+            <button type="button" class="chip is-active" data-value="Dólar Hard">Dólar Hard</button>
+            <button type="button" class="chip" data-value="Dólar Link">Dólar Link</button>
+            <button type="button" class="chip" data-value="Pesos">Pesos</button>
           </div>
         </div>
         <div class="est-field">
           <span class="est-label">Tipo de bien</span>
           <div class="chip-row" id="chipsBien" role="group" aria-label="Tipo de bien">
-            <button class="chip is-active" data-value="Rodados">Rodados</button>
-            <button class="chip" data-value="Maquinaria">Maquinaria</button>
-            <button class="chip" data-value="Otro bien de capital">Otro</button>
+            <button type="button" class="chip is-active" data-value="Rodados">Rodados</button>
+            <button type="button" class="chip" data-value="Maquinaria">Maquinaria</button>
+            <button type="button" class="chip" data-value="Otro bien de capital">Otro</button>
           </div>
         </div>
         <p class="est-conditions">Condiciones de referencia: plazo 36 meses · cuotas niveladas ·
