@@ -62,6 +62,30 @@ section[id] { scroll-margin-top: 6rem; }
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
+/* ── Parallax ───────────────────────────────── */
+/* app.js publica el desplazamiento en --py; el transform vive acá para no
+   pisar otras transformaciones y para que sin JS todo quede en su lugar. */
+[data-parallax] {
+  transform: translate3d(0, var(--py, 0px), 0);
+  will-change: transform;
+}
+
+/* Capa decorativa de fondo que se desplaza más lento que la sección */
+.section-band {
+  position: absolute;
+  top: -35%;
+  left: 0;
+  width: 100%;
+  height: 170%;
+  margin: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.section-alt > .section-band { width: 100%; }
+.band-right  { background: radial-gradient(560px 300px at 82% 28%, rgba(198, 166, 127, 0.10), transparent 70%); }
+.band-left   { background: radial-gradient(560px 300px at 14% 24%, rgba(198, 166, 127, 0.09), transparent 70%); }
+.band-center { background: radial-gradient(680px 320px at 50% 40%, rgba(198, 166, 127, 0.11), transparent 70%); }
+
 /* ── Peso variable al hover ─────────────────── */
 .wt {
   font-variation-settings: "wght" var(--wt-base, 420);
@@ -250,8 +274,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
   align-items: center;
   justify-content: center;
 }
-.hero-emblem::before {
-  content: "";
+.hero-glow {
   position: absolute;
   width: min(480px, 90vw);
   aspect-ratio: 1;
@@ -312,6 +335,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
 
 /* ── Secciones ──────────────────────────────── */
 .section {
+  position: relative;
   width: min(1120px, calc(100% - 40px));
   margin: 0 auto;
   padding: clamp(4.5rem, 9vh, 7rem) 0;
@@ -321,6 +345,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
   background: var(--bg-alt);
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
+  overflow: hidden;
 }
 .section-alt > * {
   width: min(1120px, calc(100% - 40px));
@@ -328,15 +353,10 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
   margin-right: auto;
 }
 .section-alt { padding-left: 0; padding-right: 0; }
+/* El contenido va por encima de la capa de parallax */
+.section > *:not(.section-band) { position: relative; z-index: 1; }
 
 .section-head { max-width: 44rem; margin-bottom: 3.4rem; }
-.section-head-center {
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-}
-.section-head-center .section-title { padding-left: 0; }
-.section-head-center .section-title::before { display: none; }
 .section-title {
   position: relative;
   font-size: clamp(1.9rem, 3.6vw, 2.8rem);
@@ -572,64 +592,6 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
   font-style: italic;
 }
 
-/* ── Estimador ──────────────────────────────── */
-.estimator { max-width: 620px; margin: 0 auto; }
-.estimator-panel {
-  background: linear-gradient(170deg, var(--surface-2), var(--surface));
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-deep);
-  padding: 2.2rem 2rem;
-}
-.est-field { margin-bottom: 1.5rem; }
-.est-label {
-  display: block;
-  font-size: 0.78rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 0.65rem;
-  font-variation-settings: "wght" 560;
-}
-.chip-row { display: flex; flex-wrap: wrap; gap: 0.55rem; }
-.chip {
-  font-family: var(--font-body);
-  font-size: 0.92rem;
-  font-variation-settings: "wght" 480;
-  color: var(--muted);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 0.62rem 1.05rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-.chip:hover { color: var(--text); border-color: rgba(219, 196, 163, 0.4); }
-.chip.is-active {
-  color: #241a06;
-  background: var(--gold);
-  border-color: var(--gold);
-  font-variation-settings: "wght" 620;
-}
-.est-conditions {
-  font-size: 0.85rem;
-  color: var(--muted);
-  margin-bottom: 1.4rem;
-  padding: 0.8rem 1rem;
-  border-left: 2px solid var(--gold);
-  background: rgba(198, 166, 127, 0.05);
-  border-radius: 0 10px 10px 0;
-}
-
-.legal {
-  margin-top: 1.4rem;
-  padding-top: 1.2rem;
-  border-top: 1px solid var(--line);
-  font-size: 0.8rem;
-  color: rgba(168, 159, 141, 0.75);
-  text-align: center;
-}
-
 /* ── Equipo ─────────────────────────────────── */
 /* Flex en lugar de grid: con 5 integrantes, la última fila queda centrada
    sola y ninguna tarjeta necesita un ancho propio que se escape del contenedor. */
@@ -791,6 +753,12 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
   .nav > .btn { display: none; }
   .bento, .benefits, .currencies { grid-template-columns: 1fr; }
   .person { flex: 0 1 100%; max-width: 100%; }
+  /* El triángulo se achica y acerca sus vértices para que las etiquetas
+     de la base entren completas en pantallas angostas. */
+  .triad { width: min(280px, 62vw); }
+  .triad-node { font-size: 0.82rem; }
+  .triad-node:nth-child(2) { left: 90%; }
+  .triad-node:nth-child(3) { left: 10%; }
   .bento-featured { grid-column: auto; }
   .footer { justify-content: center; text-align: center; }
 }
@@ -802,4 +770,5 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .wt, .hero-title .ch { transition: none; }
   [data-tilt] { transform: none !important; }
+  [data-parallax] { transform: none !important; }
 }

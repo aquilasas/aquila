@@ -1,8 +1,8 @@
 /* AQUILA — interacciones
    1. Título hero: el peso de cada letra responde a la cercanía del mouse.
    2. Tarjetas con tilt 3D + brillo que sigue el cursor.
-   3. Reveal on scroll, nav con fondo al scrollear, marquee infinito.
-   4. Estimador: arma un mailto con la selección del usuario.
+   3. Reveal progresivo, nav con fondo al scrollear, marquee infinito.
+   4. Parallax: capas de fondo que se desplazan a distinta velocidad.
 */
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -122,39 +122,38 @@ nav.querySelectorAll('.nav-links a').forEach((a) =>
 const track = document.getElementById('marqueeTrack');
 track.innerHTML += track.innerHTML;
 
-/* ── 4. Estimador → mailto con la selección ── */
-const selection = {
-  moneda: 'Dólar Hard',
-  bien: 'Rodados',
-};
+/* ── 4. Parallax ── */
+/* Cada [data-parallax] se desplaza en vertical una fracción de lo que se
+   scrollea: valores positivos lo hacen ir más lento que la página (queda
+   "atrás") y negativos, más rápido. El desplazamiento se publica en --py
+   y el transform vive en el CSS, así no pisamos otras transformaciones. */
+const parallaxEls = [...document.querySelectorAll('[data-parallax]')];
+if (parallaxEls.length && !prefersReducedMotion) {
+  let parallaxPending = false;
 
-const bindChips = (containerId, key) => {
-  const container = document.getElementById(containerId);
-  container.querySelectorAll('.chip').forEach((chip) => {
-    chip.addEventListener('click', () => {
-      container.querySelectorAll('.chip').forEach((c) => c.classList.remove('is-active'));
-      chip.classList.add('is-active');
-      selection[key] = chip.dataset.value;
-      updateCta();
-    });
-  });
-};
+  const applyParallax = () => {
+    parallaxPending = false;
+    const vh = window.innerHeight;
+    for (const el of parallaxEls) {
+      const r = el.getBoundingClientRect();
+      // -1 cuando el elemento asoma por abajo, 0 al centro, 1 al salir por arriba
+      const progress = (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2);
+      const shift = progress * parseFloat(el.dataset.parallax) * 100;
+      el.style.setProperty('--py', `${shift.toFixed(1)}px`);
+    }
+  };
 
-const cta = document.getElementById('estimatorCta');
-const updateCta = () => {
-  const subject = encodeURIComponent('Consulta de cuota de leasing');
-  const body = encodeURIComponent(
-    `Hola, quiero consultar la cuota estimada de un leasing.\n\n` +
-    `· Moneda: ${selection.moneda}\n` +
-    `· Tipo de bien: ${selection.bien}\n\n` +
-    `Datos de contacto:\n· Empresa:\n· Monto estimado:\n· Teléfono:\n`
-  );
-  cta.href = `mailto:info@aquilasas.com?subject=${subject}&body=${body}`;
-};
+  const onParallax = () => {
+    if (!parallaxPending) {
+      parallaxPending = true;
+      requestAnimationFrame(applyParallax);
+    }
+  };
 
-bindChips('chipsMoneda', 'moneda');
-bindChips('chipsBien', 'bien');
-updateCta();
+  window.addEventListener('scroll', onParallax, { passive: true });
+  window.addEventListener('resize', onParallax, { passive: true });
+  applyParallax();
+}
 
 /* Nav: resaltar la sección visible */
 const navAnchors = [...nav.querySelectorAll('.nav-links a')];
@@ -165,7 +164,7 @@ const spyObserver = new IntersectionObserver((entries) => {
     if (link) link.classList.toggle('active', entry.isIntersecting);
   }
 }, { rootMargin: '-35% 0px -55% 0px' });
-['areas', 'leasing', 'estimador', 'equipo'].forEach((id) => {
+['areas', 'leasing', 'equipo'].forEach((id) => {
   const el = document.getElementById(id);
   if (el) spyObserver.observe(el);
 });
