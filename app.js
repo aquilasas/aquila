@@ -62,7 +62,7 @@ if (heroTitle) {
 /* ── 2. Tilt 3D + brillo en tarjetas y placa ── */
 if (!prefersReducedMotion && !isCoarsePointer) {
   const MAX_TILT = 5; // grados
-  document.querySelectorAll('[data-tilt], .logo-float').forEach((el) => {
+  document.querySelectorAll('[data-tilt]').forEach((el) => {
     el.addEventListener('mousemove', (e) => {
       const r = el.getBoundingClientRect();
       const px = (e.clientX - r.left) / r.width;
