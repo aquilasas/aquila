@@ -78,7 +78,17 @@ if (!prefersReducedMotion && !isCoarsePointer) {
   });
 }
 
-/* ── 3. Reveal on scroll ── */
+/* ── 3. Reveal progresivo al bajar ── */
+/* Cada grupo con [data-stagger] reparte un retardo incremental entre sus hijos,
+   así los elementos van apareciendo de a uno en lugar de todos de golpe. */
+const STEP = 90; // ms entre un elemento y el siguiente
+document.querySelectorAll('[data-stagger]').forEach((group) => {
+  [...group.children].forEach((child, i) => {
+    child.classList.add('reveal');
+    child.style.setProperty('--d', `${i * STEP}ms`);
+  });
+});
+
 const revealObserver = new IntersectionObserver((entries) => {
   for (const entry of entries) {
     if (entry.isIntersecting) {
@@ -86,7 +96,7 @@ const revealObserver = new IntersectionObserver((entries) => {
       revealObserver.unobserve(entry.target);
     }
   }
-}, { threshold: 0.12 });
+}, { threshold: 0.15, rootMargin: '0px 0px -6% 0px' });
 document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
 
 /* Nav: fondo de vidrio al scrollear */
@@ -114,7 +124,6 @@ track.innerHTML += track.innerHTML;
 
 /* ── 4. Estimador → mailto con la selección ── */
 const selection = {
-  monto: 'USD 50.000',
   moneda: 'Dólar Hard',
   bien: 'Rodados',
 };
@@ -136,15 +145,13 @@ const updateCta = () => {
   const subject = encodeURIComponent('Consulta de cuota de leasing');
   const body = encodeURIComponent(
     `Hola, quiero consultar la cuota estimada de un leasing.\n\n` +
-    `· Monto estimado: ${selection.monto}\n` +
     `· Moneda: ${selection.moneda}\n` +
     `· Tipo de bien: ${selection.bien}\n\n` +
-    `Datos de contacto:\n· Empresa:\n· Teléfono:\n`
+    `Datos de contacto:\n· Empresa:\n· Monto estimado:\n· Teléfono:\n`
   );
   cta.href = `mailto:info@aquilasas.com?subject=${subject}&body=${body}`;
 };
 
-bindChips('chipsMonto', 'monto');
 bindChips('chipsMoneda', 'moneda');
 bindChips('chipsBien', 'bien');
 updateCta();
