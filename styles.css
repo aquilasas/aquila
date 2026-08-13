@@ -6,25 +6,40 @@
    ═══════════════════════════════════════════════ */
 
 :root {
-  --bg: #0d0c09;
-  --bg-alt: #12100c;
-  --surface: #171410;
-  --surface-2: #1d1913;
-  --line: rgba(219, 196, 163, 0.14);
+  --bg: #22201e;
+  --bg-alt: #292724;
+  --bg-deep: #191715;
+  --surface: #302d2a;
+  --surface-2: #383531;
+  --line: rgba(219, 196, 163, 0.16);
   --text: #ede7da;
-  --muted: #a89f8d;
+  --muted: #b0a695;
   --gold: #c6a67f;
   --gold-soft: #dbc4a3;
   --gold-deep: #8b6941;
-  --radius: 20px;
+  --radius: 10px;
+  --notch: 22px;
+  --notch-sm: 10px;
   --font-display: "Fraunces", Georgia, serif;
   --font-body: "Inter", system-ui, -apple-system, sans-serif;
-  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.04) inset,
-                 0 -1px 0 rgba(0, 0, 0, 0.4) inset,
-                 0 12px 30px -12px rgba(0, 0, 0, 0.7);
-  --shadow-deep: 0 2px 0 rgba(255, 255, 255, 0.05) inset,
-                 0 30px 60px -20px rgba(0, 0, 0, 0.8),
-                 0 8px 20px -8px rgba(0, 0, 0, 0.6);
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.05) inset,
+                 0 -1px 0 rgba(0, 0, 0, 0.35) inset,
+                 0 12px 30px -12px rgba(0, 0, 0, 0.55);
+  --shadow-deep: 0 2px 0 rgba(255, 255, 255, 0.06) inset,
+                 0 30px 60px -20px rgba(0, 0, 0, 0.65),
+                 0 8px 20px -8px rgba(0, 0, 0, 0.5);
+}
+
+/* Corte de esquina "lingote" — motivo recurrente en botones y paneles */
+.cut {
+  border-radius: var(--radius);
+  clip-path: polygon(var(--notch) 0, 100% 0, 100% calc(100% - var(--notch)),
+             calc(100% - var(--notch)) 100%, 0 100%, 0 var(--notch));
+}
+.cut-sm {
+  border-radius: 6px;
+  clip-path: polygon(var(--notch-sm) 0, 100% 0, 100% calc(100% - var(--notch-sm)),
+             calc(100% - var(--notch-sm)) 100%, 0 100%, 0 var(--notch-sm));
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -72,10 +87,12 @@ section[id] { scroll-margin-top: 6rem; }
 h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
 
 /* ── Botones ────────────────────────────────── */
+/* Esquina cortada en bisel — motivo "lingote" que retoma el corte del isotipo */
 .btn {
   display: inline-block;
-  padding: 0.9rem 1.7rem;
-  border-radius: 14px;
+  padding: 0.9rem 1.75rem 0.9rem 2.05rem;
+  border-radius: 5px;
+  clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
   font-family: var(--font-body);
   font-size: 0.95rem;
   font-variation-settings: "wght" 560;
@@ -121,7 +138,12 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
   transform: translateY(-1px);
 }
 
-.btn-sm { padding: 0.6rem 1.15rem; font-size: 0.88rem; border-radius: 11px; }
+.btn-sm {
+  padding: 0.6rem 1.15rem 0.6rem 1.35rem;
+  font-size: 0.88rem;
+  border-radius: 4px;
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+}
 .btn-full { width: 100%; text-align: center; }
 
 /* ── Nav ────────────────────────────────────── */
@@ -136,12 +158,12 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
   align-items: center;
   gap: 1.5rem;
   padding: 0.55rem 0.9rem;
-  border-radius: 18px;
+  border-radius: 5px 18px 5px 18px;
   border: 1px solid transparent;
   transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
 }
 .nav.is-scrolled {
-  background: rgba(16, 14, 10, 0.72);
+  background: rgba(34, 32, 30, 0.75);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-color: var(--line);
@@ -366,12 +388,23 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
 
 .section-head { max-width: 44rem; margin-bottom: 3rem; }
 .section-title {
+  position: relative;
   font-size: clamp(1.9rem, 3.6vw, 2.8rem);
   line-height: 1.12;
   margin-bottom: 1rem;
+  padding-left: 1.15rem;
   --wt-base: 430;
   --wt-hover: 700;
   cursor: default;
+}
+.section-title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.16em;
+  bottom: 0.2em;
+  width: 3px;
+  background: linear-gradient(180deg, var(--gold-soft), var(--gold-deep));
 }
 .section-sub { color: var(--muted); font-size: 1.05rem; }
 
@@ -404,7 +437,8 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
   background: linear-gradient(165deg, var(--surface-2) 0%, var(--surface) 70%);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 1.7rem 1.6rem;
+  clip-path: polygon(var(--notch) 0, 100% 0, 100% 100%, 0 100%, 0 var(--notch));
+  padding: 1.7rem 1.6rem 1.7rem 1.9rem;
   box-shadow: var(--shadow-card);
   transform-style: preserve-3d;
   transition: transform 0.25s ease, border-color 0.3s ease, box-shadow 0.3s ease;
@@ -497,6 +531,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
   background: var(--line);
   border: 1px solid var(--line);
   border-radius: var(--radius);
+  clip-path: polygon(26px 0, 100% 0, 100% 100%, 0 100%, 0 26px);
   overflow: hidden;
   margin-bottom: 3rem;
 }
@@ -538,6 +573,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
   background: linear-gradient(165deg, var(--surface-2), var(--surface));
   border: 1px solid var(--line);
   border-radius: var(--radius);
+  clip-path: polygon(var(--notch) 0, 100% 0, 100% 100%, 0 100%, 0 var(--notch));
   padding: 1.8rem 1.5rem;
   text-align: center;
   box-shadow: var(--shadow-card);
@@ -577,11 +613,12 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
 .why {
   border: 1px solid var(--line);
   border-radius: var(--radius);
+  clip-path: polygon(30px 0, 100% 0, 100% 100%, 0 100%, 0 30px);
   background:
     radial-gradient(600px 300px at 90% 0%, rgba(198, 166, 127, 0.07), transparent 60%),
     var(--surface);
   box-shadow: var(--shadow-card);
-  padding: 2.2rem 2rem;
+  padding: 2.2rem 2rem 2.2rem 2.35rem;
 }
 .why-title {
   font-size: 1.6rem;
@@ -620,8 +657,9 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
   background: linear-gradient(170deg, var(--surface-2), var(--surface));
   border: 1px solid var(--line);
   border-radius: var(--radius);
+  clip-path: polygon(28px 0, 100% 0, 100% 100%, 0 100%, 0 28px);
   box-shadow: var(--shadow-deep);
-  padding: 2rem 1.8rem;
+  padding: 2rem 1.8rem 2rem 2.15rem;
 }
 .est-field { margin-bottom: 1.5rem; }
 .est-label {
@@ -641,8 +679,9 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
   color: var(--muted);
   background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.18));
   border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 0.62rem 1.05rem;
+  border-radius: 4px;
+  clip-path: polygon(9px 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%, 0 9px);
+  padding: 0.62rem 1.05rem 0.62rem 1.2rem;
   cursor: pointer;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 2px 6px -2px rgba(0, 0, 0, 0.5);
   transition: all 0.2s ease;
@@ -669,9 +708,10 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
 }
 
 .estimator-side {
-  padding: 2rem 1.8rem;
+  padding: 2rem 1.8rem 2rem 2.15rem;
   border: 1px solid var(--line);
   border-radius: var(--radius);
+  clip-path: polygon(28px 0, 100% 0, 100% 100%, 0 100%, 0 28px);
   background: var(--surface);
   box-shadow: var(--shadow-card);
 }
@@ -715,6 +755,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
   background: linear-gradient(165deg, var(--surface-2), var(--surface));
   border: 1px solid var(--line);
   border-radius: var(--radius);
+  clip-path: polygon(var(--notch) 0, 100% 0, 100% 100%, 0 100%, 0 var(--notch));
   padding: 1.8rem 1.5rem;
   text-align: center;
   box-shadow: var(--shadow-card);
@@ -737,7 +778,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
   color: var(--gold-soft);
   background:
     radial-gradient(closest-side at 35% 30%, rgba(219, 196, 163, 0.16), transparent),
-    linear-gradient(165deg, #201b12, #14110b);
+    linear-gradient(165deg, #2b2824, #171513);
   border: 1px solid rgba(219, 196, 163, 0.3);
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.07) inset,
               0 10px 22px -10px rgba(0, 0, 0, 0.8);
@@ -781,6 +822,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
   text-align: center;
   padding: 4rem 2rem 3.4rem;
   border-radius: 28px;
+  clip-path: polygon(44px 0, 100% 0, 100% 100%, 0 100%, 0 44px);
   border: 1px solid rgba(219, 196, 163, 0.22);
   background:
     radial-gradient(700px 340px at 50% -10%, rgba(198, 166, 127, 0.14), transparent 65%),
@@ -858,7 +900,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
     right: 0;
     flex-direction: column;
     gap: 0.2rem;
-    background: rgba(16, 14, 10, 0.96);
+    background: rgba(34, 32, 30, 0.97);
     backdrop-filter: blur(14px);
     border: 1px solid var(--line);
     border-radius: 16px;
