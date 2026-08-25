@@ -134,13 +134,13 @@ Condiciones del ejemplo: **plazo 36 meses – cuotas niveladas – sin canon ini
 Equipo con trayectoria en banca, mercado financiero y soluciones para empresas.
 
 ### Socios / Cofounders
-- **Gustavo Escande** — Especialista en banca de empresas, leasing, financiamiento y desarrollo de negocios.
-- **Soledad Lizarraga** — Especialista en empresas, mercado financiero, real estate e inversiones.
-- **Adrián Rizzo** — Especialista en estructuración comercial, relaciones institucionales y soluciones financieras para empresas.
+- **Gustavo Escande** — Socio cofundador. Especialista en banca de empresas, financiamiento, desarrollo de negocios y M&A, con amplia trayectoria en la industria bancaria y vitivinícola.
+- **Soledad Lizarraga** — Socia cofundadora. Especialista en mercado de capitales, leasing, real estate e inversiones, con amplia trayectoria bancaria y experiencia en estrategia, desarrollo y gestión de proyectos de inversión.
+- **Adrián Rizzo** — Socio cofundador. Especialista en estructuración comercial, relaciones institucionales y soluciones financieras para empresas, con amplia trayectoria en el sector bancario y experiencia en gestión y desarrollo de proyectos empresariales.
 
 ### Equipo
-- Florencia Fernandez Riestra
-- Laura Cabanillas
+- **Florencia Fernández Riestra** — Asistente comercial. Especialista en desarrollo comercial y soluciones financieras para empresas, con foco en mercado de capitales y servicios de inversión.
+- **María Laura Cabanillas** — Asistente comercial. Especialista en leasing, análisis y calificación crediticia, estructuración de soluciones financieras y seguimiento de operaciones para empresas.
 - Sales
 
 ---
