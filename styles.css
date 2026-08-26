@@ -647,7 +647,6 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: normal; }
   margin-bottom: 0.7rem;
 }
 .person-bio { color: var(--muted); font-size: 0.92rem; }
-.person-pending { font-style: italic; opacity: 0.65; }
 
 /* ── Contacto ───────────────────────────────── */
 .contact { padding-bottom: 5rem; }
